@@ -5,7 +5,7 @@ import argparse
 import shutil
 import sys
 
-METAFLAC_PATH = shutil.which('metaflacvc')
+METAFLAC_PATH = shutil.which('metaflac')
 if not METAFLAC_PATH:
     print('ERROR: metaflac not found in path')
     sys.exit(1)
