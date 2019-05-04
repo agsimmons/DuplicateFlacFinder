@@ -1,9 +1,9 @@
-import glob
 import subprocess
 import json
 import argparse
 import shutil
 import sys
+import pathlib
 
 METAFLAC_PATH = shutil.which('metaflac')
 if not METAFLAC_PATH:
@@ -22,9 +22,10 @@ def handle_arguments():
 
 def main():
     args = handle_arguments()
+    flac_dir = pathlib.Path(args.flac_dir)
 
     # Find all flac files
-    flac_files = glob.glob(args.flac_dir + r'\**\*.flac', recursive=True)
+    flac_files = flac_dir.glob('**/*.flac')
 
     flac_file_hashes = dict()
 
