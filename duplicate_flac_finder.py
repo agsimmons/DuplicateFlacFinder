@@ -2,12 +2,16 @@ import glob
 import subprocess
 import json
 import argparse
+import shutil
+import sys
 
-METAFLAC_PATH = r'dependencies\flac-1.3.2-win\win64\metaflac.exe'
+METAFLAC_PATH = shutil.which('metaflacvc')
+if not METAFLAC_PATH:
+    print('ERROR: metaflac not found in path')
+    sys.exit(1)
 
 
 # TODO: Allow user to specify a list of files and directories to include in the comparison
-# TODO: Find path to metaflac binary with shutil.which()
 
 
 def handle_arguments():
