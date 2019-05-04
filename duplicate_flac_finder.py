@@ -30,7 +30,7 @@ def main():
     flac_file_hashes = dict()
 
     for flac_file in flac_files:
-        md5 = subprocess.run(f'"{METAFLAC_PATH}" --show-md5sum "{flac_file}"', stdout=subprocess.PIPE, encoding='utf_8').stdout[:-1]
+        md5 = subprocess.run([METAFLAC_PATH, '--show-md5sum', flac_file], stdout=subprocess.PIPE, encoding='utf_8').stdout[:-1]
         if md5 is not None:
             if md5 in flac_file_hashes:
                 flac_file_hashes[md5].append(flac_file)
