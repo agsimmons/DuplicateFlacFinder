@@ -15,7 +15,7 @@ if not METAFLAC_PATH:
 
 
 def handle_arguments():
-    parser = argparse.ArgumentParser('Finds duplicate FLAC files by comparing the hash of their contained raw audio')
+    parser = argparse.ArgumentParser(description='Finds duplicate FLAC files by comparing the hash of their contained raw audio')
     parser.add_argument('flac_dir', help='Path containing FLAC files to compare')
     return parser.parse_args()
 
