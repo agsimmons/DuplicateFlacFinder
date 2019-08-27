@@ -40,6 +40,7 @@ def main():
     # Find all flac files
     flac_files = flac_dir.glob("**/*.flac")
 
+    flac_file_hashes = defaultdict(list)
     for flac_file in flac_files:
         md5 = hash_flac_file(flac_file)
 
