@@ -37,7 +37,8 @@ def main():
             [METAFLAC_PATH, "--show-md5sum", str(flac_file)],
             stdout=subprocess.PIPE,
             encoding="utf_8",
-        ).stdout[:-1]
+        ).stdout.strip()
+
         if md5 is not None:
             flac_file_hashes[md5].append(str(flac_file))
 
