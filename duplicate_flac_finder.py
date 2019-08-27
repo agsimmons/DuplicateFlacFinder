@@ -23,6 +23,16 @@ def handle_arguments():
     return parser.parse_args()
 
 
+def hash_flac_file(flac_file):
+    md5 = subprocess.run(
+        [METAFLAC_PATH, "--show-md5sum", str(flac_file)],
+        stdout=subprocess.PIPE,
+        encoding="utf_8",
+    ).stdout.strip()
+
+    return md5
+
+
 def main():
     args = handle_arguments()
     flac_dir = pathlib.Path(args.flac_dir)
@@ -30,20 +40,14 @@ def main():
     # Find all flac files
     flac_files = flac_dir.glob("**/*.flac")
 
-    flac_file_hashes = defaultdict(list)
-
     for flac_file in flac_files:
-        md5 = subprocess.run(
-            [METAFLAC_PATH, "--show-md5sum", str(flac_file)],
-            stdout=subprocess.PIPE,
-            encoding="utf_8",
-        ).stdout.strip()
+        md5 = hash_flac_file(flac_file)
 
         if md5 is not None:
             flac_file_hashes[md5].append(str(flac_file))
 
+    # Remove hashes associated with a single file
     duplicate_file_hashes = dict()
-
     for key, value in flac_file_hashes.items():
         if len(value) > 1:
             duplicate_file_hashes[key] = value
