@@ -4,6 +4,11 @@ matrix:
     - name: "Python 3.7 on Bionic"
       python: "3.7"
       dist: bionic
+      addons:
+        apt:
+          packages:
+            - flac
+
 
     - name: "Python 3.7 on Windows"
       os: windows
