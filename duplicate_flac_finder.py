@@ -4,10 +4,11 @@ import argparse
 import shutil
 import sys
 import pathlib
+from collections import defaultdict
 
-METAFLAC_PATH = shutil.which('metaflac')
+METAFLAC_PATH = shutil.which("metaflac")
 if not METAFLAC_PATH:
-    print('ERROR: metaflac not found in path')
+    print("ERROR: metaflac not found in path")
     sys.exit(1)
 
 
@@ -15,8 +16,10 @@ if not METAFLAC_PATH:
 
 
 def handle_arguments():
-    parser = argparse.ArgumentParser(description='Finds duplicate FLAC files by comparing the hash of their contained raw audio')
-    parser.add_argument('flac_dir', help='Path containing FLAC files to compare')
+    parser = argparse.ArgumentParser(
+        description="Finds duplicate FLAC files by comparing the hash of their contained raw audio"
+    )
+    parser.add_argument("flac_dir", help="Path containing FLAC files to compare")
     return parser.parse_args()
 
 
@@ -25,17 +28,18 @@ def main():
     flac_dir = pathlib.Path(args.flac_dir)
 
     # Find all flac files
-    flac_files = flac_dir.glob('**/*.flac')
+    flac_files = flac_dir.glob("**/*.flac")
 
-    flac_file_hashes = dict()
+    flac_file_hashes = defaultdict(list)
 
     for flac_file in flac_files:
-        md5 = subprocess.run([METAFLAC_PATH, '--show-md5sum', str(flac_file)], stdout=subprocess.PIPE, encoding='utf_8').stdout[:-1]
+        md5 = subprocess.run(
+            [METAFLAC_PATH, "--show-md5sum", str(flac_file)],
+            stdout=subprocess.PIPE,
+            encoding="utf_8",
+        ).stdout[:-1]
         if md5 is not None:
-            if md5 in flac_file_hashes:
-                flac_file_hashes[md5].append(str(flac_file))
-            else:
-                flac_file_hashes[md5] = [str(flac_file)]
+            flac_file_hashes[md5].append(str(flac_file))
 
     duplicate_file_hashes = dict()
 
@@ -46,5 +50,5 @@ def main():
     print(json.dumps(duplicate_file_hashes, indent=4, ensure_ascii=False))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
