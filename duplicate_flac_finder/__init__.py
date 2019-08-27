@@ -50,7 +50,6 @@ def find_duplicates(flac_files):
     return duplicate_file_hashes
 
 
-
 def main():
     args = handle_arguments()
     flac_dir = pathlib.Path(args.flac_dir)
