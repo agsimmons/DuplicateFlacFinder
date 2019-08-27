@@ -44,6 +44,8 @@ def main():
     for flac_file in flac_files:
         md5 = hash_flac_file(flac_file)
 
+        print(md5)
+
         if md5 is not None:
             flac_file_hashes[md5].append(str(flac_file))
 
@@ -54,7 +56,3 @@ def main():
             duplicate_file_hashes[key] = value
 
     print(json.dumps(duplicate_file_hashes, indent=4, ensure_ascii=False))
-
-
-if __name__ == "__main__":
-    main()
