@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/agsimmons/DuplicateFlacFinder.svg?branch=master)](https://travis-ci.org/agsimmons/DuplicateFlacFinder)
+
 # DuplicateFlacFinder
 Finds duplicate FLAC files by comparing the hash of their contained raw audio
 
